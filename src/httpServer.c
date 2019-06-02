@@ -15,23 +15,23 @@
 #define LISTEN_PORT_BOUND_ERR_MSG "Port could not be bound or other error occurred. Port number: %d\n"
 #define PATH "/some-request"
 #define URL_DELIMITER "/"
-#define MIME_CONTENT_TYPE "text/html"
+#define MIME_CONTENT_TYPE_TXT_HTML "text/html"
 
 
 
-/* FUNCTION DECLARATION (GLOBAL) *******************/
-void callback(SoupServer *soupServer,
-			  SoupMessage *msg,
-			  const char *path,
-			  GHashTable *query,
-			  SoupClientContext *client,
-			  gpointer user_data);
+/* FUNCTION DECLARATION (STATIC) *******************/
+static void callback(SoupServer *soupServer,
+			  	  	 SoupMessage *msg,
+					 const char *path,
+					 GHashTable *query,
+					 SoupClientContext *client,
+					 gpointer user_data);
 
 
 
 /* FUNCTION DEFINITION (GLOBAL) ********************/
-int main(void) {
-
+int main(void)
+{
 	SoupServer *soupServer;
 	gboolean ssllResult;
 	GError **gError = NULL;
@@ -63,12 +63,13 @@ int main(void) {
 
 
 
-void callback(SoupServer *soupServer,
-			  SoupMessage *msg,
-			  const char *path,
-			  GHashTable *query,
-			  SoupClientContext *client,
-			  gpointer user_data)
+/* FUNCTION DEFINITION (STATIC) ********************/
+static void callback(SoupServer *soupServer,
+			  	  	 SoupMessage *msg,
+					 const char *path,
+					 GHashTable *query,
+					 SoupClientContext *client,
+					 gpointer user_data)
 {
 	char* token;
 	guint32 respBodyLen;
@@ -85,5 +86,5 @@ void callback(SoupServer *soupServer,
 	respBody = g_memdup(token, respBodyLen);
 
 	soup_message_set_status(msg, SOUP_STATUS_OK);
-	soup_message_set_response(msg, MIME_CONTENT_TYPE, SOUP_MEMORY_TAKE, respBody, respBodyLen);
+	soup_message_set_response(msg, MIME_CONTENT_TYPE_TXT_HTML, SOUP_MEMORY_TAKE, respBody, respBodyLen);
 }
